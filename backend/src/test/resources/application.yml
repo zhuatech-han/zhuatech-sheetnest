@@ -1,0 +1,22 @@
+# Copyright 2026 上海如静知华信息科技有限公司 · https://www.zhuatech.cn/ · 微信 zhuatech / zhuatech2
+spring:
+  jackson:
+    deserialization:
+      accept-float-as-int: false
+      fail-on-unknown-properties: true
+  datasource:
+    url: jdbc:h2:mem:sheetnest;MODE=MySQL;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=TRUE
+    username: sa
+    password:
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    properties:
+      hibernate.globally_quoted_identifiers: true
+      hibernate.globally_quoted_identifiers_skip_column_definitions: true
+    hibernate:
+      ddl-auto: validate
+    open-in-view: false
+  flyway:
+    enabled: true
+sheetnest:
+  admin-password: ${TEST_ADMIN_PASSWORD}
