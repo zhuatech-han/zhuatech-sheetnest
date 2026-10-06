@@ -1,4 +1,6 @@
-# SheetNest · 知华板材排样与切割结果复核
+[中文](README.md) | [English](README.en.md)
+
+# SheetNest · 知华板材排样与切割结果复核系统
 
 ![知华科技 LOGO](frontend/public/brand/logo.jpg)
 
@@ -72,12 +74,12 @@
 
 | 用户工作台 | 方案与结果 |
 |---|---|
-| ![登录](docs/screenshots/login.jpg) | ![设计岗位工作台](docs/screenshots/planner-home.jpg) |
-| ![实际排样图](docs/screenshots/layout.jpg) | ![零件需求](docs/screenshots/parts.jpg) |
-| ![指定人登记结果](docs/screenshots/results.jpg) | ![独立封存结果](docs/screenshots/closed.jpg) |
-| ![用户管理](docs/screenshots/users.jpg) | ![角色权限](docs/screenshots/roles.jpg) |
-| ![实际统计](docs/screenshots/dashboard.jpg) | ![英文界面](docs/screenshots/english.jpg) |
-| ![手机界面](docs/screenshots/mobile.jpg) | |
+| ![登录](docs/screenshots/login.jpg)<br>**登录**：通过会话认证进入工作空间。 | ![设计岗位工作台](docs/screenshots/planner-home.jpg)<br>**设计工作台**：查看权限范围内的方案与状态。 |
+| ![实际排样图](docs/screenshots/layout.jpg)<br>**排样图**：查看零件位置、切缝、余料和面积账。 | ![零件需求](docs/screenshots/parts.jpg)<br>**零件需求**：维护尺寸、数量及旋转许可。 |
+| ![指定人登记结果](docs/screenshots/results.jpg)<br>**实物结果**：由指定人员登记合格、报废、未切数量。 | ![独立封存结果](docs/screenshots/closed.jpg)<br>**封存结果**：查看独立复核后的实际结局。 |
+| ![用户管理](docs/screenshots/users.jpg)<br>**用户管理**：维护账号、部门和岗位。 | ![角色权限](docs/screenshots/roles.jpg)<br>**角色权限**：配置接口权限及数据范围。 |
+| ![实际统计](docs/screenshots/dashboard.jpg)<br>**统计**：查看范围内方案状态和人工实物数量。 | ![英文界面](docs/screenshots/english.jpg)<br>**英文界面**：查看英文操作页面。 |
+| ![手机界面](docs/screenshots/mobile.jpg)<br>**手机界面**：在窄屏布局中查看和操作方案。 | |
 
 ## 技术、结构与数据库
 
@@ -135,7 +137,11 @@ Java21、Maven3.9及已迁移的本机MySQL；为后端进程设置数据库配�
 ```bash
 cd backend
 mvn spring-boot:run
-# 另一个终端，Node24.19.0／npm11
+```
+
+另一个终端，在项目根目录使用Node24.19.0／npm11：
+
+```bash
 cd frontend
 npm ci
 npm run dev
@@ -147,7 +153,9 @@ Vite回环开发端口的`/api`与`/actuator`代理到127.0.0.1:8080。详情见
 
 ```bash
 cd backend
+export TEST_ADMIN_PASSWORD="$(python3 -c 'import secrets; print("Aa9" + secrets.token_urlsafe(24))')"
 mvn spotless:check test package
+unset TEST_ADMIN_PASSWORD
 cd ../frontend
 npm ci
 npm run format:check
@@ -161,6 +169,8 @@ git diff --check
 ```
 
 后端36项：24项HTTP/JPA状态、范围、撤权、幂等、并发、严格尺寸与人工计数测试；12项算法测试含120组固定种子场景的独立几何校验。前端12项测试覆盖请求与CSRF、岗位状态、显式零值、缺失数量、尺寸精度及单位。隔离MySQL脚本验证7张方案、正常／短缺／停止、退回与修订、范围、并发、CSV、几何和面积账，共2294项断言。
+
+`TEST_ADMIN_PASSWORD`仅供后端测试使用，临时随机生成，不是运行实例的管理员口令；不要写入源码或使用真实业务账号口令。
 
 ```bash
 # 仅在新建的独立、可丢弃回环测试实例执行；会写入TEST账号和业务
@@ -197,3 +207,5 @@ python3 scripts/smoke.py --verify
 | ![微信 zhuatech](docs/images/wechat-zhuatech.png) | ![微信 zhuatech2](docs/images/wechat-zhuatech2.png) |
 
 官网：[知华科技](https://www.zhuatech.cn/) · 服务：商业授权、定制开发、部署与系统集成。
+
+商业授权或深度定制开发请联系知华科技。
